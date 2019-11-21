@@ -1,0 +1,196 @@
+% Realizar el parcial integramente en este archivo. Escribir nombre y apellido.
+% Nombre y apellido: Sabrina Diaz
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%ganador(Anio,Competidor,Vehiculo).
+
+ganador(1997,peterhansel,moto(1995, 1)).
+ganador(1998,peterhansel,moto(1998, 1)).
+ganador(2010,sainz,auto(touareg)).
+ganador(2010,depress,moto(2009, 2)).
+ganador(2010,karibov,camion([vodka, mate])).
+ganador(2010,patronelli,cuatri(yamaha)).
+ganador(2011,principeCatar,auto(touareg)).
+ganador(2011,coma,moto(2011, 2)).
+ganador(2011,chagin,camion([repuestos, mate])).
+ganador(2011,patronelli,cuatri(yamaha)).
+ganador(2012,peterhansel,auto(countryman)).
+ganador(2012,depress,moto(2011, 2)).
+ganador(2012,deRooy,camion([vodka, bebidas])).
+ganador(2012,patronelli,cuatri(yamaha)).
+ganador(2013,peterhansel,auto(countryman)).
+ganador(2013,depress,moto(2011, 2)).
+ganador(2013,nikolaev,camion([vodka, bebidas])).
+ganador(2013,patronelli,cuatri(yamaha)).
+ganador(2014,coma,auto(countryman)).
+ganador(2014,coma,moto(2013, 3)).
+ganador(2014,karibov,camion([tanqueExtra])).
+ganador(2014,casale,cuatri(yamaha)).
+ganador(2015,principeCatar,auto(countryman)).
+ganador(2015,coma,moto(2013, 2)).
+ganador(2015,mardeev,camion([])).
+ganador(2015,sonic,cuatri(yamaha)).
+ganador(2016,peterhansel,auto(2008)).
+ganador(2016,prince,moto(2016, 2)).
+ganador(2016,deRooy,camion([vodka, mascota])).
+ganador(2016,patronelli,cuatri(yamaha)).
+ganador(2017,peterhansel,auto(3008)).
+ganador(2017,sunderland,moto(2016, 4)).
+ganador(2017,nikolaev,camion([ruedaExtra])).
+ganador(2017,karyakin,cuatri(yamaha)).
+ganador(2018,sainz,auto(3008)).
+ganador(2018,walkner,moto(2018, 3)).
+ganador(2018,nicolaev,camion([vodka, cama])).
+ganador(2018,casale,cuatri(yamaha)).
+ganador(2019,principeCatar,auto(hilux)).
+ganador(2019,prince,moto(2018, 2)).
+ganador(2019,nikolaev,camion([cama, mascota])).
+ganador(2019,cavigliasso,cuatri(yamaha)).
+
+
+%pais(Competidor,Pais).
+
+pais(peterhansel,francia).
+pais(sainz,espania).
+pais(depress,francia).
+pais(karibov,rusia).
+pais(patronelli,argentina).
+pais(principeCatar,catar).
+pais(coma,espania).
+pais(chagin,rusia).
+pais(deRooy,holanda).
+pais(nikolaev,rusia).
+pais(casale,chile).
+pais(mardeev,rusia).
+pais(sonic,polonia).
+pais(prince,australia).
+pais(sunderland,reinoUnido).
+pais(karyakin,rusia).
+pais(walkner,austria).
+pais(cavigliasso,argentina).
+pais(natanael,argentina). %agrego pais de competidor que no gano
+
+etapa(marDelPlata,santaRosa,60).
+etapa(santaRosa,sanRafael,290).
+etapa(sanRafael,sanJuan,208).
+etapa(sanJuan,chilecito,326).
+etapa(chilecito,fiambala,177).
+etapa(fiambala,copiapo,274).
+etapa(copiapo,antofagasta,477).
+etapa(antofagasta,iquique,557).
+etapa(iquique,arica,377).
+etapa(arica,arequipa,478).
+etapa(arequipa,nazca,246).
+etapa(nazca,pisco,276).
+etapa(pisco,lima,29).
+
+%%%%%%%% Resolver a partir de aca:
+%%%%%%%% Punto 1
+
+%a tieneModelo(Marca,Modelo).
+
+tieneModelo(peugeot,auto2008).
+tieneModelo(peugeot,auto3008).
+tieneModelo(mini,countryman).
+tieneModelo(volkswagen,touareg).
+tieneModelo(toyota,hilux).
+
+/*b
+Si quiero decir que el modelo buggy es marca mini, solo tengo que agregar el hecho a mi base de conocimientos, como el modelo dkr no esta en mi base de
+conocimientos, no agrego nada, por el principio de Universo de cerrado.
+*/
+%%%%%%%% Punto 2
+
+ganadorReincidente(Competidor) :- ganador(Anio,Competidor,_),
+                                   ganador(OtroAnio,Competidor,_),
+                                   Anio\= OtroAnio.
+
+%%%%%%%% Punto 3
+
+competidor(peterhansel).
+competidor(sainz).
+competidor(depress).
+competidor(karibo).
+competidor(patronelli).
+competidor(nikolaev).
+competidor(sunderland).
+competidor(casale).
+competidor(cavigliasso).
+competidor(sonic).
+competidor(natanael). %agrego un competidor que no gano
+
+inspiraA(Competidor,OtroCompetidor) :- competidor(OtroCompetidor),
+                                  ganador(_,Competidor,_),not(ganador(_,OtroCompetidor,_)), 
+                                  mismoPais(Competidor,OtroCompetidor),Competidor \= OtroCompetidor.
+
+inspiraA(Competidor,OtroCompetidor) :-  ganador(Anio,Competidor,_), ganador(OtroAnio,OtroCompetidor,_),
+                                         mismoPais(Competidor,OtroCompetidor),
+                                         Anio is OtroAnio - 1, Competidor \= OtroCompetidor.
+
+mismoPais(Competidor,OtroCompetidor) :- pais(Competidor,Pais),pais(OtroCompetidor,Pais).
+
+
+%%%%%%%% Punto 4
+
+%auto(modelo)
+%moto(anioDeFabricacion, suspensionesExtras)
+%camion(items)
+%cuatri(marca)
+
+esDeMarca(ktm).
+esDeMarca(yamaha).
+esDeMarca(kamaz).
+esDeMarca(iveco).
+
+marcaDeLaFortuna(Competidor,Marca) :- ganador(_,Competidor,_), esDeMarca(Marca),
+                                  forall(vehiculosDeEsaMarca(Vehiculo,Marca),ganador(_,Competidor,Vehiculo)).
+
+vehiculosDeEsaMarca(Vehiculo,Marca) :- marca(Vehiculo,Marca), tieneModelo(Marca,_).
+
+%marca(Vehiculo,Marca) aca se ve el polimorfismo
+marca(moto(AnioDeFabricacion,_),ktm) :- AnioDeFabricacion >= 2000.
+marca(moto(AnioDeFabricacion,_),yamaha) :- AnioDeFabricacion < 2000.
+marca(camion([ListaDeCosas]),kamaz) :- member(vodka,ListaDeCosas).
+marca(camion([ListaDeCosas]),iveco) :- not(member(vodka,ListaDeCosas)).
+marca(cuatri(Marca),Marca).
+
+
+%%%%%%%% Punto 5
+
+heroePopular(Competidor) :- inspiraA(Competidor,_), ganador(Anio,Competidor,Vehiculo),
+                           forall((ganador(Anio,_,Vehiculo),vehiculoCaro(Vehiculo)),not(vehiculoCaro(Vehiculo))). 
+
+vehiculoCaro(Vehiculo) :- marca(Vehiculo,mini).
+vehiculoCaro(Vehiculo) :- marca(Vehiculo,toyota).
+vehiculoCaro(Vehiculo) :- marca(Vehiculo,iveco).
+vehiculoCaro(moto(_,SuspensionesExtras)) :- SuspensionesExtras >= 3.
+vehiculoCaro(cuatri(_)).
+
+%%%%%%%% Punto 6
+
+%etapa(Locacion,OtraLocacion,Distancia).
+
+%a
+
+recorrio(LocacionInicial,LocacionFinal,Kilometros) :- etapa(LocacionInicial,LocacionFinal,Kilometros).
+
+recorrio(LocacionInicial,LocacionFinal,Kilometros) :- etapa(LocacionInicial,LocacionIntermedia,KilometroIntermedio),
+                                             recorrio(LocacionIntermedia,LocacionFinal,KilometrosFinal),
+                                             Kilometros is KilometroIntermedio + KilometrosFinal.
+
+%b
+
+vehiculo(moto(1995, 1)). % agregue este hecho para corrobar a los vehiculos que no son caros.
+vehiculo(camion([vodka, mascota])).
+
+cuantoPuedeRecorrer(Vehiculo,2000) :- vehiculoCaro(Vehiculo). 
+cuantoPuedeRecorrer(Vehiculo,1800) :- vehiculo(Vehiculo),  not(vehiculoCaro(Vehiculo)).
+cuantoPuedeRecorrer(camion([ListaDeCosas]) ,Distancia) :- length(ListaDeCosas, Cantidad), 
+                                                      Distancia is Cantidad * 1000.
+  
+%c
+
+destinoMasLejano(Vehiculo,Origen,Destino) :- vehiculo(Vehiculo),
+                                       recorrio(Origen,Destino,Distancia),
+                                      cuantoPuedeRecorrer(Vehiculo,DistanciaVehiculo), DistanciaVehiculo >= Distancia.
+                                  
